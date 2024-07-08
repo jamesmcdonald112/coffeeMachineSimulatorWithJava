@@ -114,6 +114,27 @@ files:
           }
       }
     learner_created: false
-feedback_link: https://hyperskill.org/projects/33/stages/176/implement#comment
-status: Unchecked
+  - name: src/machine/notes.txt
+    visible: true
+    learner_created: true
+  - name: src/machine/Ingredients.java
+    visible: true
+    learner_created: true
+  - name: src/machine/IngredientCalculator.java
+    visible: true
+    learner_created: true
+  - name: src/machine/IngredientTotals.java
+    visible: true
+    learner_created: true
+  - name: src/machine/InputHandler.java
+    visible: true
+    learner_created: true
+  - name: src/machine/OutputHandler.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/5330#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 08 Jul 2024 20:30:45 UTC"
 record: -1

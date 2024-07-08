@@ -1,0 +1,9 @@
+Classes
+- I have my classes
+CoffeeMachine.java
+IngredientCalculator.java
+Ingredients.java
+IngredientTotals.java
+InputHandler.java
+OutputHandler.java
+
