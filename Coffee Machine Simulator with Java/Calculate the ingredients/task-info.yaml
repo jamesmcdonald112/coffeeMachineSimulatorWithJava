@@ -123,7 +123,7 @@ files:
   - name: src/machine/IngredientCalculator.java
     visible: true
     learner_created: true
-  - name: src/machine/IngredientTotals.java
+  - name: src/machine/IngredientRequirments.java
     visible: true
     learner_created: true
   - name: src/machine/InputHandler.java
@@ -137,4 +137,4 @@ status: Solved
 feedback:
   message: Congratulations!
   time: "Mon, 08 Jul 2024 20:30:45 UTC"
-record: -1
+record: 2

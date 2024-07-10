@@ -1,6 +1,6 @@
 package machine;
 
-public class IngredientTotals {
+public class IngredientRequirements {
     // INSTANCE VARIABLES
     private int totalWater;
     private int totalMilk;
@@ -9,8 +9,11 @@ public class IngredientTotals {
 
     // CONSTRUCTOR
 
-
-    public IngredientTotals(int numberOfCups) {
+    /**
+     * Constructor that takes in the number of cups and calculates the total ingredients required
+     * @param numberOfCups The number of cups of coffee required.
+     */
+    public IngredientRequirements(int numberOfCups) {
         this.numberOfCups = numberOfCups;
         // Calculates and set all the totals for the instance variables above
         this.totalWater = IngredientCalculator.calculateTotalWater(numberOfCups);
