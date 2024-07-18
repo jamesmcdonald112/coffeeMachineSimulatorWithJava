@@ -1,54 +1,78 @@
-Classes
-- I have my classes
-CoffeeMachine.java
-IngredientCalculator.java
-Ingredients.java
-IngredientTotals.java
-InputHandler.java
-OutputHandler.java
+COFFEE MACHINE
 
-From user
-amyWater
-amtMilk
-amyCoffeeBeans
+Interface - CoffeeMachineActions
+void execute()
 
-InputHandler (Done)
-- Prompt the user for the current quantities of water, milk, and coffee beans available
+BuyAction - implements CoffeeMachineActions
+void execute()
 
-IngredientAvailability (Done)
-Create an instance of Ingredient Availability with these amounts and initialise their instance variables
-- Create an instance of maxCoffeeAvailable which will be calculated and updated when the constructor
- is called.
- - Create a method in ingredinet Calculator to make this amount and return it as an int
+FillAction - implements CoffeeMachineActions
+void execute()
+
+TakeAction -implementsCoffeeMachineActions
+void execute()
+
+MENU
+Menu - Interface
+void run()
+
+CoffeMachineMenu - implements Menu
+void run()
+
+CoffeeMenu - implements Menu
+void run()
+
+CoffeMachineMenu - Implements  Menu
+for buying, filling and taking.
+
+CoffeeMenu - Implements  Menu
+for selecting coffees
+
+Abstract Coffee (stores requirements for a coffee)
+int water
+int milk
+int coffeeBeans
+double cost
+
+public abstract String getName()
+
+getters and setters for instance variables
+
+Espresso extends Coffee
+public espresso{
+this.water = {Input}
+this.milk = [inout]
+etc
+}
+
+@override String getName{
+return "espresso"
+}
 
 
+packages
+- coffeMachine
+- coffeeOrder
+- i/o
+- accounts
+- main
 
-CreateCoffee
-- Handles the creation of coffee by subtracting the amount of ingredients used from the available
-ingredients. (Done)
-- The coffee order class will call this class multiple times when creating coffee. The coffee order
-class will need logic to make sure there is enough ingredients available(Done)
+TODO
 
-CreateCoffeeOrder
-(Done)
-- Constructor - Takes in an instance of available ingredients and initializes the instance variable.
+- Create a Main class with a main method to run the program
+- Create an instance of Coffee machine and pass it an instance of IngredientAvailability and an
+instance of CoffeeMachineCash.
 
-- coffeeOrderHandler(IngredientAvailability, IngredientRequirements) -=
-This method handles the logic for the coffee order. It takes in the rquest and the ingredients
-avaiable.
-Create vaiables for possible coffee and coffees required as we will need them to reference and for
-calculations
-It checks if the order can be completed. If it cannot it notifies the user and tells them how many cus it can make.
-If it can make the exact amount, it tells taht this, if it can make more it tells them this.
-Finally, if the coffe can be make, the ingredients need to be subtracted.
+- Menu interface
+- CoffeeMachineMenu implements menu interface
+- Switch statement for each option
+- CoffeeMachineActions interface
+- Each action implements the interface
+
+- The user must be prompted with a menu for deciding what they want to do at the coffee machine.
+This means a menu is required for the actions, an interface for that menu as it will be used for
+more menus, an interface for each action as well, and a class for each action
+- When the user selects latte, for instance, the Latte class should be created, and make coffee
+should be called, which takes in the requirements for the coffee and the ingredients available
 
 
-- isEnoughIngredients - This method should check that there is enough ingredients to make the coffee
- order.This method compare total possible coffees with the requirement about and return a boolean.
- (DONE)
-
-- Calls creatCoffee method to subtract from the available ingredients when a coffe is created.
-- A method that calculates coffees remaining after completing order.
-
-i want a method handler for the coffee order. It should handle the logic behind if the coffeee order
- can be made or not

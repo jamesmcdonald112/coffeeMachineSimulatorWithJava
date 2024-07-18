@@ -1,21 +1,25 @@
 
-v
-FCoffee Machine Simulator with Java/task/src/machine/CoffeeMachine.java,6/7/67d4ae450f01f18832dbadd9967af48a79ac09e5
-}
-MCoffee Machine Simulator with Java/task/src/machine/IngredientCalculator.java,6/7/6712db6e5514b348a2493c16c6da38766b9d25ed
-t
-DCoffee Machine Simulator with Java/task/src/machine/Ingredients.java,f/0/f0f3a7dd2fc36de2605522fe196aeb84dd80700e
-u
-ECoffee Machine Simulator with Java/task/src/machine/InputHandler.java,d/5/d51fe223a7f6adc64933c3b77fce35b54e66600d
-
-OCoffee Machine Simulator with Java/task/src/machine/IngredientAvailability.java,5/3/531d3b17ade002b7b378d73fde8b0cd07472d80e
-
-OCoffee Machine Simulator with Java/task/src/machine/IngredientRequirements.java,2/7/27551491044c6572df825ee8e368208989c490e7
-v
-FCoffee Machine Simulator with Java/task/src/machine/OutputHandler.java,5/4/5444f435843955553020998adf1a6e709aee7eb0
-u
-ECoffee Machine Simulator with Java/task/src/machine/CreateCoffee.java,1/3/130642571df38a90a81715a98c2b2bd6681d93a9
-z
-JCoffee Machine Simulator with Java/task/src/machine/CreateCoffeeOrder.java,5/7/57fcf38aa5f1910ad063cba60302f0be4699d858
 m
 =Coffee Machine Simulator with Java/task/src/machine/notes.txt,b/4/b411b871f038aa5792372bdaf6752a8c2e808d55
+Ü
+VCoffee Machine Simulator with Java/task/src/machine/coffeeOrder/CreateCoffeeOrder.java,2/3/23d4746bb454880a27ac341ac188f19f5eb803ff
+É
+SCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/CreateCoffee.java,3/2/3217452f55104d5905d56cf06d7ef7e5daa6a3cd
+ã
+[Coffee Machine Simulator with Java/task/src/machine/coffeeOrder/IngredientRequirements.java,0/5/053e1a34d7e93d02b9567b86df5572a18951116d
+Ç
+RCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/Ingredients.java,6/d/6df2ea8d65aed9aec25bd375a1806d4859b47fa1
+x
+HCoffee Machine Simulator with Java/task/src/machine/io/InputHandler.java,c/0/c04e2f64a32f062b58a53b73ceb7a45b161a5e4c
+ç
+]Coffee Machine Simulator with Java/task/src/machine/coffeeMachine/IngredientAvailability.java,0/2/022d3ce8a9af00daf47a32e637ef2ce7dd19fa79
+y
+ICoffee Machine Simulator with Java/task/src/machine/io/OutputHandler.java,a/c/ac1d7473a36aae267751c7c26e71bf0fcc7ea8b7
+Ñ
+TCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/CoffeeMachine.java,4/9/4995be98e039a8ef6b1917ec7186334456a03ed7
+ã
+[Coffee Machine Simulator with Java/task/src/machine/coffeeMachine/IngredientCalculator.java,1/1/113fd93bb7536a7a0117716b2711206f22e15041
+É
+SCoffee Machine Simulator with Java/task/src/machine/accounts/CoffeeMachineCash.java,0/5/0530f25b58ed4b62448700b5b96859819d89235a
+è
+_Topics/Formatted output/Creating a personalized greeting based on name and height/src/Main.java,9/1/915040e1ced300ed91d44d2004bd831d11043384
