@@ -6,7 +6,7 @@ import machine.coffeeOrder.Espresso;
 import machine.coffeeOrder.Latte;
 import machine.io.InputHandler;
 
-public class BuyAction implements CoffeeMachineActions{
+public class BuyAction implements CoffeeMachineActions {
 
     private CoffeeMachine coffeeMachine;
 
@@ -18,11 +18,25 @@ public class BuyAction implements CoffeeMachineActions{
     public void execute() {
         // Displays the buy options to the user
         printBuyOptions();
+        boolean running = true;
 
         // Get user Choice
-        boolean running = true;
         while (running) {
-            int userChoice = InputHandler.userIntChoice();
+            // Get the user input
+            String userInput = InputHandler.userStringChoice();
+
+            if (userInput.equals("back")) {
+                return;
+            }
+
+            // Convert the user choice input to a number
+            int userChoice = -1;
+            try {
+                userChoice = Integer.parseInt(userInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Please input a number");
+            }
+
             switch (userChoice) {
                 case 1 -> {
                     Coffee espresso = new Espresso();
@@ -50,10 +64,12 @@ public class BuyAction implements CoffeeMachineActions{
                 }
             }
         }
+
+
     }
 
     private void printBuyOptions() {
-        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
+        System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu: ");
     }
 
 }

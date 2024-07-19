@@ -7,7 +7,7 @@
         <option name="delegatedBuild" value="false" />
         <option name="distributionType" value="WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="jbr-17" />
+        <option name="gradleJvm" value="#JAVA_INTERNAL" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -30,6 +30,14 @@
             <option value="$PROJECT_DIR$/Topics/Formatted output/String Format Precision" />
             <option value="$PROJECT_DIR$/Topics/Formatted output/The battle for Mathematics" />
             <option value="$PROJECT_DIR$/Topics/Formatted output/Theory" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/Check correctness" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/Determine the result" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/Statements" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/The length of the sequence" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/The number of loop body executions" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/The sequence" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/The sum of elements" />
+            <option value="$PROJECT_DIR$/Topics/While and do-while loops/Theory" />
             <option value="$PROJECT_DIR$/util" />
           </set>
         </option>

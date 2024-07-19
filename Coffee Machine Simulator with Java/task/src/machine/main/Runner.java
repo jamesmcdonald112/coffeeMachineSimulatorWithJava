@@ -26,8 +26,6 @@ public class Runner {
         CoffeeMachine coffeeMachine = new CoffeeMachine(ingredientAvailability, coffeeMachineCash);
         coffeeMachine.CoffeeMachineHandler();
 
-        OutputHandler.printCoffeeMachineState(coffeeMachine);
-
 
 
 

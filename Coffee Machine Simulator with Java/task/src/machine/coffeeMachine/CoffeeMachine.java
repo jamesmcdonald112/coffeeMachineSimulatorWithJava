@@ -33,9 +33,6 @@ public class CoffeeMachine {
 
     // METHODS
     public void CoffeeMachineHandler() {
-        // Print coffee machine state
-        OutputHandler.printCoffeeMachineState(this);
-
         // Run Coffee Machine Menu
         CoffeeMachineMenu coffeeMachineMenu = new CoffeeMachineMenu(this);
         coffeeMachineMenu.run();

@@ -13,43 +13,60 @@ public class CreateCoffee {
     public static void makeCoffee(IngredientAvailability ingredientAvailability,
                                   CoffeeMachineCash coffeeMachineCash,
                                   Coffee coffee) {
-        // Available Ingredients
-        int availableWater = ingredientAvailability.getWater();
-        int availableMilk = ingredientAvailability.getMilk();
-        int availableCoffeeBeans = ingredientAvailability.getCoffeeBeans();
-        int availableDisposableCups = ingredientAvailability.getDisposableCups();
+        if (isEnoughIngredients(ingredientAvailability, coffee)) {
+            // Available Ingredients
+            int availableWater = ingredientAvailability.getWater();
+            int availableMilk = ingredientAvailability.getMilk();
+            int availableCoffeeBeans = ingredientAvailability.getCoffeeBeans();
+            int availableDisposableCups = ingredientAvailability.getDisposableCups();
 
-        // Coffee machine cash
-        int availableCoffeeMachineCash = coffeeMachineCash.getCash();
+            // Coffee machine cash
+            int availableCoffeeMachineCash = coffeeMachineCash.getCash();
 
-        // Required Ingredients
-        int requiredWater = coffee.getWater();
-        int requiredMilk = coffee.getMilk();
-        int requiredCoffeeBeans = coffee.getCoffeeBeans();
-        int cost = coffee.getCost();
+            // Required Ingredients
+            int requiredWater = coffee.getWater();
+            int requiredMilk = coffee.getMilk();
+            int requiredCoffeeBeans = coffee.getCoffeeBeans();
+            int cost = coffee.getCost();
 
-        // Update the ingredients available and incase the money in the machine
-        ingredientAvailability.setWater(availableWater - requiredWater);
-        ingredientAvailability.setMilk(availableMilk - requiredMilk);
-        ingredientAvailability.setCoffeeBeans(availableCoffeeBeans - requiredCoffeeBeans);
-        ingredientAvailability.setDisposableCups(availableDisposableCups - 1);
-        coffeeMachineCash.setCash(availableCoffeeMachineCash + cost);
+            // Update the ingredients available and incase the money in the machine
+            ingredientAvailability.setWater(availableWater - requiredWater);
+            ingredientAvailability.setMilk(availableMilk - requiredMilk);
+            ingredientAvailability.setCoffeeBeans(availableCoffeeBeans - requiredCoffeeBeans);
+            ingredientAvailability.setDisposableCups(availableDisposableCups - 1);
+            coffeeMachineCash.setCash(availableCoffeeMachineCash + cost);
+        } else {
+            System.out.println("I have enough resources, making you a coffee!");
+        }
+
 
     }
 
     /**
      * Takes in the ingredients and compares with the minim values needed to make a cup of coffee.
-     * @param water The amount of water available
-     * @param milk The amount of milk available
-     * @param coffeeBeans The amount of coffee beans available
+     * @param ingredientAvailability The ingredients available
+     * @param coffee The coffe to be made
      * @return True if the is enough ingredients to make a coffee; false otherwise
      */
-    public static boolean isEnoughIngredients(int water, int milk, int coffeeBeans) {
-        boolean enoughWater = water >= Ingredients.WATER_PER_CUP;
-        boolean enoughMilk = milk >= Ingredients.MILK_PER_CUP;
-        boolean enoughCoffeeBeans = coffeeBeans >= Ingredients.COFFEE_BEANS_PER_CUP;
+    public static boolean isEnoughIngredients(IngredientAvailability ingredientAvailability,
+                                              Coffee coffee) {
+        // Available Ingredients
+        int availableWater = ingredientAvailability.getWater();
+        int availableMilk = ingredientAvailability.getMilk();
+        int availableCoffeeBeans = ingredientAvailability.getCoffeeBeans();
+        int availableCups = ingredientAvailability.getDisposableCups();
 
-        return enoughWater && enoughMilk && enoughCoffeeBeans;
+        // Required Ingredients
+        int requiredWater = coffee.getWater();
+        int requiredMilk = coffee.getMilk();
+        int requiredCoffeeBeans = coffee.getCoffeeBeans();
+
+        boolean enoughWater = availableWater >= requiredWater;
+        boolean enoughMilk = availableMilk >= requiredMilk;
+        boolean enoughCoffeeBeans = availableCoffeeBeans >= requiredCoffeeBeans;
+        boolean enoughCups = availableCups >= 1;
+
+        return enoughWater && enoughMilk && enoughCoffeeBeans && enoughCups;
     }
 
 

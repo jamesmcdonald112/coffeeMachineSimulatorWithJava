@@ -14,7 +14,7 @@ public class IngredientAvailability {
         this.milk = milk;
         this.coffeeBeans = coffeeBeans;
         this.disposableCups = disposableCups;
-        this.maxCoffees = IngredientCalculator.calculateTotalCoffees(this);
+//        this.maxCoffees = IngredientCalculator.calculateTotalCoffees(this);
     }
 
     // GETTER AND SETTERS

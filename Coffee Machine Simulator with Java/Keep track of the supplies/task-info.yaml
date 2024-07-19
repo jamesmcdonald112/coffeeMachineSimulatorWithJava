@@ -1,16 +1,5 @@
 type: edu
 files:
-  - name: src/machine/CoffeeMachine.java
-    visible: true
-    text: |
-      package machine;
-      
-      public class CoffeeMachine {
-          public static void main(String[] args) {
-              System.out.println("Hello World!");
-          }
-      }
-    learner_created: false
   - name: test/CoffeeMachineTest.java
     visible: false
     text: |
@@ -276,6 +265,1047 @@ files:
           }
       }
     learner_created: false
+  - name: src/machine/io/OutputHandler.java
+    visible: true
+    text: |
+      package machine.io;
+      
+      import machine.accounts.CoffeeMachineCash;
+      import machine.coffeeMachine.CoffeeMachine;
+      import machine.coffeeMachine.IngredientAvailability;
+      import machine.coffeeOrder.IngredientRequirements;
+      
+      public class OutputHandler {
+      
+          /**
+           * Lists and prints the total ingredients required based on the number of coffees inputted.
+           * @param ingredientRequirements An instance off the amount of coffees required
+           */
+          public static void printIngredientRequirements(IngredientRequirements ingredientRequirements) {
+              int cups = ingredientRequirements.getNumberOfCups();
+              int water = ingredientRequirements.getTotalWater();
+              int milk = ingredientRequirements.getTotalMilk();
+              int beans = ingredientRequirements.getTotalCoffeeBeans();
+              System.out.println("For " + cups + " cups of coffee you will need:\n" +
+                      water + " ml of water\n" +
+                      milk+ " ml of milk\n" +
+                      beans+ " g of coffee beans");
+          }
+      
+          /**
+           * Lists and prints the total ingredients in the machine.
+           * @param coffeeMachine An instance of the amount of Coffee Machine
+           */
+          public static void printCoffeeMachineState(CoffeeMachine coffeeMachine) {
+              // Instance of Coffee Machine Cash Available and Ingredients available
+              CoffeeMachineCash coffeeMachineCash = coffeeMachine.getCoffeeMachineCash();
+              IngredientAvailability ingredientAvailability = coffeeMachine.getIngredientAvailability();
+      
+              // Get the available amount of each ingredient
+              int water = ingredientAvailability.getWater();
+              int milk = ingredientAvailability.getMilk();
+              int beans = ingredientAvailability.getCoffeeBeans();
+              int cups = ingredientAvailability.getDisposableCups();
+              int cash = coffeeMachineCash.getCash();
+              System.out.println("The coffee machine has:\n" +
+                      water + " ml of water\n" +
+                      milk + " ml of milk\n" +
+                      beans + " g of coffee beans\n" +
+                      cups + " disposable cups\n" +
+                      "$" + cash + " of money");
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/BuyAction.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      import machine.coffeeOrder.Cappuccino;
+      import machine.coffeeOrder.Coffee;
+      import machine.coffeeOrder.Espresso;
+      import machine.coffeeOrder.Latte;
+      import machine.io.InputHandler;
+      
+      public class BuyAction implements CoffeeMachineActions{
+      
+          private CoffeeMachine coffeeMachine;
+      
+          public BuyAction(CoffeeMachine coffeeMachine) {
+              this.coffeeMachine = coffeeMachine;
+          }
+      
+          @Override
+          public void execute() {
+              // Displays the buy options to the user
+              printBuyOptions();
+      
+              // Get user Choice
+              boolean running = true;
+              while (running) {
+                  int userChoice = InputHandler.userIntChoice();
+                  switch (userChoice) {
+                      case 1 -> {
+                          Coffee espresso = new Espresso();
+                          // Get instances of the ingredients and cash available and pass them along
+                          // with the espresso to it
+                          CreateCoffee.makeCoffee(coffeeMachine.getIngredientAvailability(),
+                                  coffeeMachine.getCoffeeMachineCash(), espresso);
+                          running = false;
+                      }
+                      case 2 -> {
+                          Coffee latte = new Latte();
+                          CreateCoffee.makeCoffee(coffeeMachine.getIngredientAvailability(),
+                                  coffeeMachine.getCoffeeMachineCash(), latte);
+                          running = false;
+                      }
+                      case 3 -> {
+                          Coffee cappuccino = new Cappuccino();
+                          CreateCoffee.makeCoffee(coffeeMachine.getIngredientAvailability(),
+                                  coffeeMachine.getCoffeeMachineCash(), cappuccino);
+                          running = false;
+                      }
+                      default -> {
+                          System.out.println("Please choose a number between 1-3");
+                          running = false;
+                      }
+                  }
+              }
+          }
+      
+          private void printBuyOptions() {
+              System.out.println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino: ");
+          }
+      
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/FillAction.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      import machine.io.InputHandler;
+      
+      public class FillAction implements CoffeeMachineActions{
+      
+          CoffeeMachine coffeeMachine;
+      
+          public FillAction(CoffeeMachine coffeeMachine) {
+              this.coffeeMachine = coffeeMachine;
+          }
+      
+          @Override
+          public void execute() {
+              int water = waterPrompt();
+              int milk = milkPrompt();
+              int coffeeBeans = coffeeBeansPrompt();
+              int cups = cupsPrompt();
+      
+              // Get the instance of ingredientAvailability
+              IngredientAvailability ingredientAvailability = coffeeMachine.getIngredientAvailability();
+      
+              // Increase the amounts
+              ingredientAvailability.increaseWater(water);
+              ingredientAvailability.increaseMilk(milk);
+              ingredientAvailability.increaseCoffeeBeans(coffeeBeans);
+              ingredientAvailability.increaseCups(cups);
+      
+          }
+      
+          private int waterPrompt() {
+              System.out.println("Write how many ml of water you want to add:");
+              return InputHandler.userIntChoice();
+          }
+      
+          private int milkPrompt() {
+              System.out.println("Write how many ml of milk you want to add: ");
+              return InputHandler.userIntChoice();
+          }
+      
+          private int coffeeBeansPrompt() {
+              System.out.println("Write how many grams of coffee beans you want to add: ");
+              return InputHandler.userIntChoice();
+          }
+      
+          private int cupsPrompt() {
+              System.out.println("Write how many disposable cups you want to add: ");
+              return InputHandler.userIntChoice();
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/CoffeeMachine.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      import machine.accounts.CoffeeMachineCash;
+      import machine.io.OutputHandler;
+      
+      public class CoffeeMachine {
+          //INSTANCE VARIABLES
+          private IngredientAvailability ingredientAvailability;
+          private CoffeeMachineCash coffeeMachineCash;
+      
+          public CoffeeMachine(IngredientAvailability ingredientAvailability, CoffeeMachineCash coffeeMachineCash) {
+              this.ingredientAvailability = ingredientAvailability;
+              this.coffeeMachineCash = coffeeMachineCash;
+          }
+      
+          // GETTERS AND SETTERS
+      
+          public IngredientAvailability getIngredientAvailability() {
+              return ingredientAvailability;
+          }
+      
+          public void setIngredientAvailability(IngredientAvailability ingredientAvailability) {
+              this.ingredientAvailability = ingredientAvailability;
+          }
+      
+          public CoffeeMachineCash getCoffeeMachineCash() {
+              return coffeeMachineCash;
+          }
+      
+          public void setCoffeeMachineCash(CoffeeMachineCash coffeeMachineCash) {
+              this.coffeeMachineCash = coffeeMachineCash;
+          }
+      
+          // METHODS
+          public void CoffeeMachineHandler() {
+              // Print coffee machine state
+              OutputHandler.printCoffeeMachineState(this);
+      
+              // Run Coffee Machine Menu
+              CoffeeMachineMenu coffeeMachineMenu = new CoffeeMachineMenu(this);
+              coffeeMachineMenu.run();
+      
+      
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeOrder/CreateCoffeeOrder.java
+    visible: true
+    text: |
+      package machine.coffeeOrder;
+      
+      import machine.coffeeMachine.IngredientAvailability;
+      import machine.coffeeOrder.IngredientRequirements;
+      
+      public class CreateCoffeeOrder {
+          // INSTANCE VARIABLES
+          private IngredientAvailability ingredientAvailability;
+          private IngredientRequirements ingredientRequirements;
+      
+          // CONSTRUCTOR
+          public CreateCoffeeOrder(IngredientAvailability ingredientAvailability, IngredientRequirements ingredientRequirements) {
+              this.ingredientAvailability = ingredientAvailability;
+              this.ingredientRequirements = ingredientRequirements;
+          }
+      
+          // GETTERS AND SETTERS
+      
+          public IngredientAvailability getIngredientAvailability() {
+              return ingredientAvailability;
+          }
+      
+          public void setIngredientAvailability(IngredientAvailability ingredientAvailability) {
+              this.ingredientAvailability = ingredientAvailability;
+          }
+      
+          public IngredientRequirements getIngredientRequirements() {
+              return ingredientRequirements;
+          }
+      
+          public void setIngredientRequirements(IngredientRequirements ingredientRequirements) {
+              this.ingredientRequirements = ingredientRequirements;
+          }
+      
+          // PUBLIC METHODS
+          public void coffeeOrderHandler() {
+      
+              // Get the total possible coffees and the ordered coffees and store as variables
+              int totalPossibleCoffees = this.ingredientAvailability.getMaxCoffees();
+              int orderedCoffees = this.ingredientRequirements.getNumberOfCups();
+      
+              // Get the difference
+              int difference = Math.abs(orderedCoffees - totalPossibleCoffees);
+      
+              // If there is enough ingredients
+              if (isEnoughIngredientsForOrder(this.ingredientRequirements, this.ingredientAvailability)) {
+                  // TODO: Logic for removing the total amount of coffee form the ingredients available
+                  if (orderedCoffees == totalPossibleCoffees) {
+                      System.out.println("Yes, I can make that amount of coffee");
+                  } else if (orderedCoffees < totalPossibleCoffees) {
+                      System.out.println("Yes, I can make that amount of coffee (and even " + difference + " more " +
+                              "than that)");
+                  }
+                  // If there is not enough ingredients
+              } else {
+                  System.out.println("No, I can make only " + totalPossibleCoffees + " cup(s) of coffee");
+              }
+      
+          }
+      
+          // PRIVATE METHODS
+      
+          /**
+           * Makes sure there is enough ingredients by comparing possible cups of coffee that can be
+           * made with the amount of cups required for the order.
+           *
+           * @param ingredientRequirements The ingredients required for the order
+           * @param ingredientAvailability The ingredients available
+           * @return True if there is enough ingredients for the order; false otherwise
+           */
+          private static boolean isEnoughIngredientsForOrder(IngredientRequirements ingredientRequirements,
+                                                             IngredientAvailability ingredientAvailability) {
+              int cupsRequired = ingredientRequirements.getNumberOfCups();
+              int maxCupsAvailable = ingredientAvailability.getMaxCoffees();
+      
+              return cupsRequired <= maxCupsAvailable;
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/machine/coffeeOrder/Coffee.java
+    visible: true
+    text: |
+      package machine.coffeeOrder;
+      
+      public abstract class Coffee {
+          private int water;
+          private int milk;
+          private int coffeeBeans;
+          private int cost;
+      
+          public abstract String getName();
+      
+          // GETTER AND SETTERS
+      
+          public int getWater() {
+              return water;
+          }
+      
+          public void setWater(int water) {
+              this.water = water;
+          }
+      
+          public int getMilk() {
+              return milk;
+          }
+      
+          public void setMilk(int milk) {
+              this.milk = milk;
+          }
+      
+          public int getCoffeeBeans() {
+              return coffeeBeans;
+          }
+      
+          public void setCoffeeBeans(int coffeeBeans) {
+              this.coffeeBeans = coffeeBeans;
+          }
+      
+          public int getCost() {
+              return cost;
+          }
+      
+          public void setCost(int cost) {
+              this.cost = cost;
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/TakeAction.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      public class TakeAction implements CoffeeMachineActions{
+          CoffeeMachine coffeeMachine;
+      
+          public TakeAction(CoffeeMachine coffeeMachine) {
+              this.coffeeMachine = coffeeMachine;
+          }
+      
+          @Override
+          public void execute() {
+              int cash = coffeeMachine.getCoffeeMachineCash().getCash();
+              System.out.println("I gave you $" + cash);
+              coffeeMachine.getCoffeeMachineCash().setCash(0);
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/IngredientCalculator.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      public class IngredientCalculator {
+      
+          /**
+           * Calculates the total amount of water needed based on the number of cups.
+           *
+           * @param numberOfCups The number of cups needed
+           * @return The amount of water as an int, representing ml
+           */
+          public static int calculateTotalWater(int numberOfCups) {
+              return Ingredients.WATER_PER_CUP * numberOfCups;
+          }
+      
+          /**
+           * Calculates the total amount of milk needed based on the number of cups.
+           *
+           * @param numberOfCups The number of cups needed
+           * @return The amount of milk as an int, representing ml
+           */
+          public static int calculateTotalMilk(int numberOfCups) {
+              return Ingredients.MILK_PER_CUP * numberOfCups;
+          }
+      
+          /**
+           * Calculates the total amount of coffee beans needed based on the number of cups.
+           *
+           * @param numberOfCups The number of cups needed
+           * @return The amount of coffee beans as an int, representing grams
+           */
+          public static int calculateTotalCoffeeBeans(int numberOfCups) {
+              return Ingredients.COFFEE_BEANS_PER_CUP * numberOfCups;
+          }
+      
+          /**
+           * Calculates the total possible coffees that can be made.
+           * @param ingredientAvailability Ingredients available.
+           * @return The number of coffes that can be made
+           */
+          public static int calculateTotalCoffees(IngredientAvailability ingredientAvailability) {
+              // Get the individual ingredients available.
+              int water = ingredientAvailability.getWater();
+              int milk = ingredientAvailability.getMilk();
+              int coffeeBeans = ingredientAvailability.getCoffeeBeans();
+      
+              // Keep track of the coffees
+              int coffeeCount = 0;
+      
+              // A loop that breaks if we cannot make another coffee
+              while (CreateCoffee.isEnoughIngredients(water, milk, coffeeBeans)) {
+                  water -= Ingredients.WATER_PER_CUP;
+                  milk -= Ingredients.MILK_PER_CUP;
+                  coffeeBeans -= Ingredients.COFFEE_BEANS_PER_CUP;
+                  coffeeCount++;
+      
+              }
+      
+              // Return total coffees
+              return coffeeCount;
+          }
+      
+      }
+    learner_created: true
+  - name: src/machine/accounts/CoffeeMachineCash.java
+    visible: true
+    text: |
+      package machine.accounts;
+      
+      public class CoffeeMachineCash {
+          // INSTANCE VARIABLES
+          private int cash;
+      
+          public CoffeeMachineCash(int cash) {
+              this.cash = cash;
+          }
+      
+          // GETTERS AND SETTERS
+      
+      
+          public int getCash() {
+              return cash;
+          }
+      
+          public void setCash(int cash) {
+              this.cash = cash;
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/CreateCoffee.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      import machine.accounts.CoffeeMachineCash;
+      import machine.coffeeOrder.Coffee;
+      
+      public class CreateCoffee {
+      
+          /**
+           * Using the available ingredients, the method subtracts the amount of ingredients used to
+           * make one coffee
+           * @param ingredientAvailability The ingredients available.
+           */
+          public static void makeCoffee(IngredientAvailability ingredientAvailability,
+                                        CoffeeMachineCash coffeeMachineCash,
+                                        Coffee coffee) {
+              // Available Ingredients
+              int availableWater = ingredientAvailability.getWater();
+              int availableMilk = ingredientAvailability.getMilk();
+              int availableCoffeeBeans = ingredientAvailability.getCoffeeBeans();
+              int availableDisposableCups = ingredientAvailability.getDisposableCups();
+      
+              // Coffee machine cash
+              int availableCoffeeMachineCash = coffeeMachineCash.getCash();
+      
+              // Required Ingredients
+              int requiredWater = coffee.getWater();
+              int requiredMilk = coffee.getMilk();
+              int requiredCoffeeBeans = coffee.getCoffeeBeans();
+              int cost = coffee.getCost();
+      
+              // Update the ingredients available and incase the money in the machine
+              ingredientAvailability.setWater(availableWater - requiredWater);
+              ingredientAvailability.setMilk(availableMilk - requiredMilk);
+              ingredientAvailability.setCoffeeBeans(availableCoffeeBeans - requiredCoffeeBeans);
+              ingredientAvailability.setDisposableCups(availableDisposableCups - 1);
+              coffeeMachineCash.setCash(availableCoffeeMachineCash + cost);
+      
+          }
+      
+          /**
+           * Takes in the ingredients and compares with the minim values needed to make a cup of coffee.
+           * @param water The amount of water available
+           * @param milk The amount of milk available
+           * @param coffeeBeans The amount of coffee beans available
+           * @return True if the is enough ingredients to make a coffee; false otherwise
+           */
+          public static boolean isEnoughIngredients(int water, int milk, int coffeeBeans) {
+              boolean enoughWater = water >= Ingredients.WATER_PER_CUP;
+              boolean enoughMilk = milk >= Ingredients.MILK_PER_CUP;
+              boolean enoughCoffeeBeans = coffeeBeans >= Ingredients.COFFEE_BEANS_PER_CUP;
+      
+              return enoughWater && enoughMilk && enoughCoffeeBeans;
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/machine/coffeeOrder/IngredientRequirements.java
+    visible: true
+    text: |
+      package machine.coffeeOrder;
+      
+      import machine.coffeeMachine.IngredientCalculator;
+      
+      public class IngredientRequirements {
+          // INSTANCE VARIABLES
+          private int totalWater;
+          private int totalMilk;
+          private int totalCoffeeBeans;
+          private int numberOfCups;
+      
+          // CONSTRUCTOR
+      
+          /**
+           * Constructor that takes in the number of cups and calculates the total ingredients required
+           * @param numberOfCups The number of cups of coffee required.
+           */
+          public IngredientRequirements(int numberOfCups) {
+              this.numberOfCups = numberOfCups;
+              // Calculates and set all the totals for the instance variables above
+              this.totalWater = IngredientCalculator.calculateTotalWater(numberOfCups);
+              this.totalMilk = IngredientCalculator.calculateTotalMilk(numberOfCups);
+              this.totalCoffeeBeans = IngredientCalculator.calculateTotalCoffeeBeans(numberOfCups);
+      
+          }
+      
+          // GETTERS AND SETTERS
+          public int getTotalWater() {
+              return totalWater;
+          }
+      
+          public void setTotalWater(int totalWater) {
+              this.totalWater = totalWater;
+          }
+      
+          public int getTotalMilk() {
+              return totalMilk;
+          }
+      
+          public void setTotalMilk(int totalMilk) {
+              this.totalMilk = totalMilk;
+          }
+      
+          public int getTotalCoffeeBeans() {
+              return totalCoffeeBeans;
+          }
+      
+          public void setTotalCoffeeBeans(int totalCoffeeBeans) {
+              this.totalCoffeeBeans = totalCoffeeBeans;
+          }
+      
+          public int getNumberOfCups() {
+              return numberOfCups;
+          }
+      
+          public void setNumberOfCups(int numberOfCups) {
+              this.numberOfCups = numberOfCups;
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/Ingredients.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      public class Ingredients {
+          // FINAL VARIABLES
+          public static final int WATER_PER_CUP = 200; //ml
+          public static final int MILK_PER_CUP = 50; //ml
+          public static final int COFFEE_BEANS_PER_CUP = 15; // grams
+          public static final int CUP = 1; // Each coffee uses one cup
+      }
+    learner_created: true
+  - name: src/machine/io/InputHandler.java
+    visible: true
+    text: |
+      package machine.io;
+      
+      import java.util.Scanner;
+      
+      public class InputHandler {
+          // INSTANCE VARIABLES
+          private static final Scanner SCANNER = new Scanner(System.in);
+      
+          /**
+           * Returns the users choice as a string
+           * @return The users choice as a String
+           */
+          public static String userStringChoice() {
+              String userChoice = SCANNER.nextLine();
+              return userChoice;
+          }
+      
+          public static int userIntChoice() {
+              boolean running = true;
+              int userChoice = -1;
+              while (running) {
+                  String input = SCANNER.nextLine();
+                  try {
+                      userChoice =Integer.parseInt(input);
+                      running = false;
+                  } catch (NumberFormatException e) {
+                      System.out.println("Invalid input. Please enter a valid number.");
+                  }
+      
+              }
+              return userChoice;
+          }
+      
+      
+          /**
+           * Prompts the user to enter the total cups of coffee they require.
+           * @return The total cups of coffee as an int
+           */
+          public static int promptForCupsOfCoffee() {
+              System.out.println("Write how many cups of coffee you will need: ");
+              int cupsOfCoffee = SCANNER.nextInt();
+              return cupsOfCoffee;
+          }
+      
+      
+          /**
+           * Prompts the user to enter the quantity of water available in ml.
+           * @return The total available water as an int.
+           */
+          public static int promptForAvailableWater() {
+              System.out.println("Write how many ml of water the coffee machine has:");
+              int water = SCANNER.nextInt();
+              return water;
+          }
+      
+          /**
+           * Prompts the user to enter the quantity of milk available in ml.
+           * @return The total available milk as an int.
+           */
+          public static int promptForAvailableMilk() {
+              System.out.println("Write how many ml of milk the coffee machine has:");
+              int milk = SCANNER.nextInt();
+              return milk;
+          }
+      
+          /**
+           * Prompts the user to enter the quantity of coffee beans available in grams.
+           * @return The total available coffee beans as an int.
+           */
+          public static int promptForAvailableCoffeeBeans() {
+              System.out.println("Write how many grams of coffee beans the coffee machine has:");
+              int coffeeBeans = SCANNER.nextInt();
+              return coffeeBeans;
+          }
+      
+          /**
+           * Prompts the user to enter desired action for the coffeeMachine.
+           * @return The users choice as a string
+           */
+          public static String promptForCoffeeMachineAction() {
+              System.out.println("Write action (buy, fill, take):");
+              String userAction = SCANNER.nextLine();
+              return userAction;
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/CoffeeMachineActions.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      public interface CoffeeMachineActions {
+          /**
+           * Executes the action.
+           */
+          void execute();
+      }
+    learner_created: true
+  - name: src/machine/coffeeOrder/Cappuccino.java
+    visible: true
+    text: |
+      package machine.coffeeOrder;
+      
+      public class Cappuccino extends Coffee{
+      
+          public Cappuccino() {
+              setWater(200);
+              setMilk(100);
+              setCoffeeBeans(12);
+              setCost(6);
+          }
+      
+          @Override
+          public String getName() {
+              return "Cappuccino";
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeOrder/Latte.java
+    visible: true
+    text: |
+      package machine.coffeeOrder;
+      
+      public class Latte extends Coffee{
+      
+          public Latte() {
+              setWater(350);
+              setMilk(75);
+              setCoffeeBeans(20);
+              setCost(7);
+          }
+      
+          @Override
+          public String getName() {
+              return "Latte";
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/CoffeeMachineMenu.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      import machine.io.InputHandler;
+      
+      public class CoffeeMachineMenu implements Menu{
+          private CoffeeMachine coffeeMachine;
+      
+          public CoffeeMachineMenu(CoffeeMachine coffeeMachine) {
+              this.coffeeMachine = coffeeMachine;
+          }
+      
+          @Override
+          public void run() {
+              // Set loop to get user choice
+              boolean running = true;
+              while (running) {
+                  // Display directions for the user in the console
+                  menuMessage();
+                  String userChoice = InputHandler.userStringChoice();
+      
+                  // Make sure it matches an option
+                  switch (userChoice) {
+                      case "buy" -> {
+                          new BuyAction(coffeeMachine).execute();
+                          running = false;
+                      }
+                      case "fill" -> {
+                          new FillAction(coffeeMachine).execute();
+                          running = false;
+                      }
+                      case "take" -> {
+                          new TakeAction(coffeeMachine).execute();
+                          running = false;
+                      }
+                      default -> System.out.println("Please pick from one of the options in the list");
+                  }
+              }
+      
+      
+      
+          }
+      
+          /**
+           * Prints a directions for the user in the console
+           */
+          private void menuMessage() {
+              System.out.println("Write action (buy, fill, take): ");
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/machine/coffeeMachine/Menu.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      public interface Menu {
+          void run();
+      }
+    learner_created: true
+  - name: src/machine/notes.txt
+    visible: true
+    text: |+
+      COFFEE MACHINE
+      
+      Interface - CoffeeMachineActions
+      void execute()
+      
+      BuyAction - implements CoffeeMachineActions
+      void execute()
+      
+      FillAction - implements CoffeeMachineActions
+      void execute()
+      
+      TakeAction -implementsCoffeeMachineActions
+      void execute()
+      
+      MENU
+      Menu - Interface
+      void run()
+      
+      CoffeMachineMenu - implements Menu
+      void run()
+      
+      CoffeeMenu - implements Menu
+      void run()
+      
+      CoffeMachineMenu - Implements  Menu
+      for buying, filling and taking.
+      
+      CoffeeMenu - Implements  Menu
+      for selecting coffees
+      
+      Abstract Coffee (stores requirements for a coffee)
+      int water
+      int milk
+      int coffeeBeans
+      double cost
+      
+      public abstract String getName()
+      
+      getters and setters for instance variables
+      
+      Espresso extends Coffee
+      public espresso{
+      this.water = {Input}
+      this.milk = [inout]
+      etc
+      }
+      
+      @override String getName{
+      return "espresso"
+      }
+      
+      
+      packages
+      - coffeMachine
+      - coffeeOrder
+      - i/o
+      - accounts
+      - main
+      
+      TODO
+      
+      - Create a Main class with a main method to run the program
+      - Create an instance of Coffee machine and pass it an instance of IngredientAvailability and an
+      instance of CoffeeMachineCash.
+      
+      - Menu interface
+      - CoffeeMachineMenu implements menu interface
+      - Switch statement for each option
+      - CoffeeMachineActions interface
+      - Each action implements the interface
+      
+      - The user must be prompted with a menu for deciding what they want to do at the coffee machine.
+      This means a menu is required for the actions, an interface for that menu as it will be used for
+      more menus, an interface for each action as well, and a class for each action
+      - When the user selects latte, for instance, the Latte class should be created, and make coffee
+      should be called, which takes in the requirements for the coffee and the ingredients available
+    
+    
+    learner_created: true
+  - name: src/machine/coffeeMachine/IngredientAvailability.java
+    visible: true
+    text: |
+      package machine.coffeeMachine;
+      
+      public class IngredientAvailability {
+          // INSTANCE VARIABLES
+          private int water;
+          private int milk;
+          private int coffeeBeans;
+          private int disposableCups;
+          private int maxCoffees;
+      
+          // CONSTRUCTOR
+          public IngredientAvailability(int water, int milk, int coffeeBeans, int disposableCups) {
+              this.water = water;
+              this.milk = milk;
+              this.coffeeBeans = coffeeBeans;
+              this.disposableCups = disposableCups;
+              this.maxCoffees = IngredientCalculator.calculateTotalCoffees(this);
+          }
+      
+          // GETTER AND SETTERS
+          public int getWater() {
+              return water;
+          }
+      
+          public void setWater(int water) {
+              this.water = water;
+          }
+      
+          public int getMilk() {
+              return milk;
+          }
+      
+          public void setMilk(int milk) {
+              this.milk = milk;
+          }
+      
+          public int getCoffeeBeans() {
+              return coffeeBeans;
+          }
+      
+          public void setCoffeeBeans(int coffeeBeans) {
+              this.coffeeBeans = coffeeBeans;
+          }
+      
+          public int getMaxCoffees() {
+              return maxCoffees;
+          }
+      
+          public void setMaxCoffees(int maxCoffees) {
+              this.maxCoffees = maxCoffees;
+          }
+      
+          public int getDisposableCups() {
+              return disposableCups;
+          }
+      
+          public void setDisposableCups(int disposableCups) {
+              this.disposableCups = disposableCups;
+          }
+      
+          public void increaseWater(int water) {
+              this.water += water;
+          }
+      
+          public void increaseMilk(int milk) {
+              this.milk += milk;
+          }
+      
+          public void increaseCoffeeBeans(int coffeeBeans) {
+              this.coffeeBeans += coffeeBeans;
+          }
+      
+          public void increaseCups(int disposableCups) {
+              this.disposableCups += disposableCups;
+          }
+      }
+    learner_created: true
+  - name: src/machine/main/Runner.java
+    visible: true
+    text: |
+      package machine.main;
+      
+      import machine.accounts.CoffeeMachineCash;
+      import machine.coffeeMachine.CoffeeMachine;
+      import machine.coffeeMachine.IngredientAvailability;
+      import machine.io.OutputHandler;
+      
+      public class Runner {
+          public static void main(String[] args) {
+              // Get the quantities of milk, water, and coffee available.
+              int water = 400; //ml
+              int milk = 540; //ml
+              int coffeeBeans = 120; // grams
+              int disposableCups = 9; // cups
+              int money = 550; // dollars
+      
+              // Create an instance of Ingredients available to store the quantity of ingredients.
+              IngredientAvailability ingredientAvailability = new IngredientAvailability(water, milk,
+                      coffeeBeans, disposableCups);
+      
+              // Create an instance of cash available in the machine
+              CoffeeMachineCash coffeeMachineCash = new CoffeeMachineCash(money);
+      
+              // Create an instance of the coffee machine and pass the amount of cash and ingredients
+              // available
+              CoffeeMachine coffeeMachine = new CoffeeMachine(ingredientAvailability, coffeeMachineCash);
+              coffeeMachine.CoffeeMachineHandler();
+      
+              OutputHandler.printCoffeeMachineState(coffeeMachine);
+      
+      
+      
+      
+      
+      
+      //        // Prompt the user for the total cups of coffee
+      //        int cupsOfCoffee = InputHandler.promptForCupsOfCoffee();
+      //
+      //        // Creating an instance of ingredient totals has the logic to calculate the totals
+      //        // required in the constructor
+      //        IngredientRequirements ingredientRequirements = new IngredientRequirements(cupsOfCoffee);
+      //
+      //        // Notify the user if they have enough ingredients to make the desired quantity of coffee
+      //        // or not
+      //        CreateCoffeeOrder createCoffeeOrder = new CreateCoffeeOrder(ingredientAvailability,
+      //                ingredientRequirements);
+      //        createCoffeeOrder.coffeeOrderHandler();
+          }
+      }
+    learner_created: true
+  - name: src/machine/coffeeOrder/Espresso.java
+    visible: true
+    text: |
+      package machine.coffeeOrder;
+      
+      public class Espresso extends Coffee{
+      
+          public Espresso() {
+              setWater(250);
+              setMilk(0);
+              setCoffeeBeans(16);
+              setCost(4);
+          }
+      
+          @Override
+          public String getName() {
+              return "Espresso";
+          }
+      }
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5333#comment
-status: Unchecked
-record: -1
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Thu, 18 Jul 2024 21:04:11 UTC"
+record: 5

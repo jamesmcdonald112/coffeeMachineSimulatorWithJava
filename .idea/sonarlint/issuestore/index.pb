@@ -23,3 +23,27 @@ TCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/CoffeeMachine
 SCoffee Machine Simulator with Java/task/src/machine/accounts/CoffeeMachineCash.java,0/5/0530f25b58ed4b62448700b5b96859819d89235a
 è
 _Topics/Formatted output/Creating a personalized greeting based on name and height/src/Main.java,9/1/915040e1ced300ed91d44d2004bd831d11043384
+{
+KCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/Menu.java,0/9/09604e6136e2120a747de9129618ab1fbf45336f
+{
+KCoffee Machine Simulator with Java/task/src/machine/coffeeOrder/Coffee.java,5/9/5968b4f0e38d40774325bc70302eea3a767f3b8e
+}
+MCoffee Machine Simulator with Java/task/src/machine/coffeeOrder/Espresso.java,5/9/59f4634cde637032862eeb79f74a4456665b6742
+z
+JCoffee Machine Simulator with Java/task/src/machine/coffeeOrder/Latte.java,8/6/861c4654bf1c55ff963258e402cd19490607c461
+
+OCoffee Machine Simulator with Java/task/src/machine/coffeeOrder/Cappuccino.java,f/9/f99cd7b4e7febf6328fc34eb65b632c746258b25
+Ä
+PCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/BuyAction.java,e/a/ea89161e47880741830791e6b17cfc1a96543fd5
+Å
+QCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/FillAction.java,a/e/ae4f7ca719f86667706b4ac2a448551101278bd3
+ã
+[Coffee Machine Simulator with Java/task/src/machine/coffeeMachine/CoffeeMachineActions.java,d/b/db430a8928c3ab526dc717426cb4d3901fa28350
+à
+XCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/CoffeeMachineMenu.java,b/d/bd9236010743598ae49ddc7725192a6fb794bd13
+Å
+QCoffee Machine Simulator with Java/task/src/machine/coffeeMachine/TakeAction.java,0/b/0b8960ddd06c08c826c5c2dd5d64a37ac0af4100
+t
+DCoffee Machine Simulator with Java/task/src/machine/main/Runner.java,2/5/25b4a97304cffd112ec4c98ee7d7d173292cc56f
+x
+HTopics/While and do-while loops/The length of the sequence/src/Main.java,4/3/4344fd369705ab0a1d7883ff2b96bfb2ff3fcd14
