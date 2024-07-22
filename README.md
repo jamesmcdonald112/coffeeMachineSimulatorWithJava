@@ -59,8 +59,8 @@ processing coffee orders, and maintaining the machine's cash.
 - Run the Runner class.
 
 ```bash
-cd Coffee\ Machine\ Simulator\ with\ Java/task/src/machine/main 
-javac -d bin src/machine/**/*.java
+cd Coffee\ Machine\ Simulator\ with\ Java/task
+javac -d bin -sourcepath src src/machine/main/Runner.java
 java -cp bin machine.main.Runner
 ```
 
