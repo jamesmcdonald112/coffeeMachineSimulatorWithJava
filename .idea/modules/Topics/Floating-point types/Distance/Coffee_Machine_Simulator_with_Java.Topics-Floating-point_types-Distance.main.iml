@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":Topics-Floating-point_types-Distance:main" external.linked.project.path="$MODULE_DIR$/../../../../../Topics/Floating-point types/Distance" external.root.project.path="$MODULE_DIR$/../../../../.." external.system.id="GRADLE" external.system.module.group="Coffee Machine Simulator with Java" external.system.module.type="sourceSet" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/../../../../../Topics/Floating-point types/Distance/out/production/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../../Topics/Floating-point types/Distance/src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../../../Topics/Floating-point types/Distance/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="0dfad3d8-0726-42cd-9cb5-39dbbbf3e39a" />
+  </component>
+</module>

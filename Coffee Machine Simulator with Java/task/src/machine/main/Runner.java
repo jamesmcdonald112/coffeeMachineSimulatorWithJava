@@ -25,23 +25,5 @@ public class Runner {
         // available
         CoffeeMachine coffeeMachine = new CoffeeMachine(ingredientAvailability, coffeeMachineCash);
         coffeeMachine.CoffeeMachineHandler();
-
-
-
-
-
-
-//        // Prompt the user for the total cups of coffee
-//        int cupsOfCoffee = InputHandler.promptForCupsOfCoffee();
-//
-//        // Creating an instance of ingredient totals has the logic to calculate the totals
-//        // required in the constructor
-//        IngredientRequirements ingredientRequirements = new IngredientRequirements(cupsOfCoffee);
-//
-//        // Notify the user if they have enough ingredients to make the desired quantity of coffee
-//        // or not
-//        CreateCoffeeOrder createCoffeeOrder = new CreateCoffeeOrder(ingredientAvailability,
-//                ingredientRequirements);
-//        createCoffeeOrder.coffeeOrderHandler();
     }
 }
